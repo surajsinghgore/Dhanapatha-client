@@ -1,10 +1,10 @@
-import './App.css'
-import  Images  from './constants/Images'
-
+import { RouterProvider } from "react-router-dom";
+import router from "./router/router";
 function App() {
     return (
     <>
-   <img src={Images.logo} alt={Images.logo} />
+     <RouterProvider router={router} />
+
     </>
   )
 }
