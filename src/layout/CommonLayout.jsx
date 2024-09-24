@@ -1,10 +1,12 @@
-
+import '../style/commonStyle.css';
 const CommonLayout = ({ children }) => {
 
 
   return (
-    <div>
+    <div className={"main"}> 
+    <div className="screen">
        {children}
+    </div>
     </div>
   );
 };

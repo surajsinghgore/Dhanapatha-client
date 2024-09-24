@@ -1,0 +1,138 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+
+.auth {
+  width: 100%;
+}
+
+.auth .intro {
+  padding-right: 30px;
+  color: #fff;
+  padding: 0 10px;
+  padding-bottom: 70px;
+  padding-left: 20px;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+  background-image: linear-gradient(to right, #4facfe 0%, #00f2fe 100%);
+}
+
+.intro h1 {
+  font-family: "Poppins", sans-serif;
+  font-size: 2.1em;
+  font-weight: 500;
+  padding-top: 35px;
+}
+.intro p {
+  font-family: "Inter", sans-serif;
+  font-size: 1em;
+  font-weight: 600;
+  text-transform: lowercase;
+}
+
+.container {
+  position: relative;
+  width: 100%;
+  height: 400px;
+  display: flex;
+  justify-content: center;
+}
+
+.container .form {
+  position: absolute;
+  top: -7%;
+  left: 5%;
+  padding: 30px;
+  padding-bottom: 90px;
+  background-color: #fff;
+  width: 90%;
+  border-radius: 5px;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.heading {
+  display: flex;
+  gap: 30px;
+  font-weight: 500;
+  padding-bottom: 10px;
+}
+
+.heading a {
+  font-size: 1.1em;
+  font-family: "Poppins", sans-serif;
+  text-decoration: none;
+  color: #2f2f2f;
+}
+.heading .active {
+  color: #5375fe;
+  padding-bottom: 5px;
+  border-bottom: 2px solid #5375fe;
+}
+.heading a:hover {
+  color: #5375fe;
+  padding-bottom: 5px;
+  border-bottom: 2px solid #5375fe;
+}
+
+.inputBox {
+  margin-top: 5%;
+  list-style: none;
+}
+
+.inputBox li {
+  display: flex;
+  gap: 10px;
+  border-radius: 30px;
+  align-items: center;
+  margin-bottom: 2%;
+  padding: 10px;
+  border: 2px solid rgb(229, 229, 229);
+}
+.inputBox li .icon {
+  font-size: 1.2rem;
+  color: rgb(111, 111, 111);
+}
+.inputBox li .passIcon {
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: rgb(111, 111, 111);
+}
+
+.inputBox li input {
+  border: none;
+  font-size: 1rem;
+  outline: none;
+  width: 100%;
+}
+
+.submit {
+  position: absolute;
+  bottom: -10%;
+  left: 40%;
+  width: 65px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 65px;
+  background-color: #ffffff;
+  border-radius: 50%;
+}
+
+.submit .circle {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  background-image: linear-gradient(to right, #4facfe 0%, #00f2fe 100%);
+  transition: all 0.3s;
+}
+.submit .circle .icon {
+  color: white;
+  font-size: 1.5rem;
+}
+.submit .circle:hover {
+  transform: scale(1.1);
+  background-image: linear-gradient(to right, #4facfe 0%, #04939b 100%);
+}

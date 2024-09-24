@@ -1,0 +1,16 @@
+.main {
+  background: url("../assets/background.jpg") no-repeat;
+  background-size: cover;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* background-color: #008f91; */
+  width: 100vw;
+  height: 100vh;
+}
+.main .screen{
+    /* box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px; */
+height: 95%;
+
+width: 50%;
+}
