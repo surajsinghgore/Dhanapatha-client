@@ -136,3 +136,8 @@
   transform: scale(1.1);
   background-image: linear-gradient(to right, #4facfe 0%, #04939b 100%);
 }
+
+.error{
+    color: red;
+
+}
