@@ -3,14 +3,13 @@ import Root from "./Root";
 import CommonLayout from "../layout/CommonLayout";
 import Login from "../pages/auth/Login";
 import HomePage from "../pages/dashboard/HomePage";
-import UserProtected from "../layout/UserProtected";
-import AuthProtected from "../layout/AuthProtected";
+import UserProtected from "../authorization/UserProtected";
+import AuthProtected from "../authorization/AuthProtected";
 import Register from "../pages/auth/Register";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    // element: <MainHomePage />,
     element: <Root />,
   },
 
