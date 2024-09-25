@@ -76,3 +76,13 @@ a{
   padding: 0 20px;
   padding-bottom: 1px;
 }
+.commonTitleHeading{
+  font-size: 1.3rem;
+}
+.dateFull{
+  font-size: 0.9rem; 
+  padding: 10px 0;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: rgb(105, 105, 105);
+}

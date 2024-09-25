@@ -18,7 +18,7 @@ const Transaction = () => {
       </div>
 
       <div className="bottom">
-        <Link to="">See more</Link>
+        <Link to="/user/all-transaction">See more</Link>
       </div>
     </div>
   );

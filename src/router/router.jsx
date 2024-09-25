@@ -6,7 +6,8 @@ import HomePage from "../pages/dashboard/HomePage";
 import UserProtected from "../authorization/UserProtected";
 import AuthProtected from "../authorization/AuthProtected";
 import Register from "../pages/auth/Register";
-import PaymentPage from "../pages/client/payment/PaymentPage";
+import PaymentPage from "../pages/admin/payment/PaymentPage";
+import ShowAllTransactionPage from "../pages/client/AllTranscation/ShowAllTransactionPage";
 
 const router = createBrowserRouter([
   {
@@ -53,6 +54,14 @@ const router = createBrowserRouter([
         element: (
           <CommonLayout>
             <PaymentPage />
+          </CommonLayout>
+        ),
+      },
+      {
+        path: "all-transaction",
+        element: (
+          <CommonLayout>
+            <ShowAllTransactionPage />
           </CommonLayout>
         ),
       },
