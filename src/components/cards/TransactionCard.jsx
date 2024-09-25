@@ -3,7 +3,7 @@ import Images from "../../constants/Images";
 
 const TransactionCard = () => {
   return (
-   <Link to=""> <div className="transactionCard">
+   <Link to="/user/payment/surajsingh"> <div className="transactionCard">
       <div className="img">
         <img src={Images.user} alt="user" />
       </div>
