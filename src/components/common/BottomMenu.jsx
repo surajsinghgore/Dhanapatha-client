@@ -22,7 +22,7 @@ const BottomMenu = () => {
         <PiWalletFill />
         <span>Wallet</span>
       </Link>
-      <Link className="menu-item" to="">
+      <Link className={`menu-item ${currentPath == "/user/setting" ? "active" : ""}`} to="/user/setting">
         <RiSettings2Fill />
         <span>Settings</span>
       </Link>

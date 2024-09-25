@@ -11,6 +11,8 @@ import ShowAllTransactionPage from "../pages/client/AllTranscation/ShowAllTransa
 import PayPaymentPage from "../pages/client/payment/PayPaymentPage";
 import UserProfile from "../pages/client/Profile/UserProfile";
 import WalletPage from "../pages/client/Profile/WalletPage";
+import SettingPage from "../pages/client/Profile/SettingPage";
+import AddAccountForm from "../pages/client/Profile/AddAccountForm";
 
 const router = createBrowserRouter([
   {
@@ -89,6 +91,22 @@ const router = createBrowserRouter([
         element: (
           <CommonLayout>
             <WalletPage />
+          </CommonLayout>
+        ),
+      },
+      {
+        path: "setting",
+        element: (
+          <CommonLayout>
+            <SettingPage />
+          </CommonLayout>
+        ),
+      },
+      {
+        path: "add-account",
+        element: (
+          <CommonLayout>
+            <AddAccountForm />
           </CommonLayout>
         ),
       },
