@@ -7,10 +7,12 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { toast } from "react-toastify";
-
 import { useEffect } from "react";
 import { loginUserApi } from "../../utils/services/auth/AuthApi";
 import { setLocalStorage } from "../../utils/LocalStorage";
+
+import { useDispatch } from "react-redux";
+import { showLoader, updateProgress, hideLoader } from "../../redux/Slices/LoaderSlice";
 
 const loginValidation = yup.object({
   usernameOrEmail: yup.string().required("Username or email is required"),
@@ -19,7 +21,7 @@ const loginValidation = yup.object({
 
 const Login = () => {
   const navigate = useNavigate();
-
+  const dispatch = useDispatch();
   const {
     handleSubmit,
     register,
@@ -34,22 +36,49 @@ const Login = () => {
       return;
     }
   }, [errors]);
+
   const onSubmit = async (formData) => {
+    dispatch(showLoader());
+
+    const simulateProgress = () => {
+      let currentProgress = 0;
+      const progressInterval = setInterval(() => {
+        currentProgress += 4;
+        dispatch(updateProgress(currentProgress));
+
+        if (currentProgress >= 95) {
+          clearInterval(progressInterval);
+        }
+      }, 100);
+    };
+
+    simulateProgress();
+
     try {
       const response = await loginUserApi(formData);
+
       if (response?.success) {
+        console.log(response.user);
+        dispatch(updateProgress(100));
         setLocalStorage("token", response.token);
+        setLocalStorage("user", JSON.stringify(response.user));
         toast.success(response.message);
+
         setTimeout(() => {
           navigate("/user/dashboard");
         }, 1500);
+      } else {
+        dispatch(updateProgress(100));
       }
     } catch (error) {
-      console.error(error);
-      toast.error("An unexpected error occurred.");
+      console.log(error);
+      dispatch(updateProgress(100));
+    } finally {
+      setTimeout(() => {
+        dispatch(hideLoader());
+      }, 2000);
     }
   };
-
   return (
     <div className="auth">
       <div className="intro">

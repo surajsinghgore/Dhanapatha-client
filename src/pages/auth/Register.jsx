@@ -13,8 +13,11 @@ import { registerUserValidation } from "../../utils/services/formvalidation/Vali
 import { registrationUserApi } from "../../utils/services/auth/AuthApi";
 import { toast } from "react-toastify";
 import { setLocalStorage } from "../../utils/LocalStorage";
+import { useDispatch } from "react-redux";
+import { showLoader, updateProgress, hideLoader } from "../../redux/Slices/LoaderSlice";
 
 const Register = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const {
     handleSubmit,
@@ -38,21 +41,48 @@ const Register = () => {
   };
 
   const onSubmit = async (formData) => {
+    dispatch(showLoader());
+
+    const simulateProgress = () => {
+      let currentProgress = 0;
+      const progressInterval = setInterval(() => {
+        currentProgress += 1;
+        dispatch(updateProgress(currentProgress));
+
+        if (currentProgress >= 95) {
+          clearInterval(progressInterval);
+        }
+      }, 100);
+    };
+
+    simulateProgress();
+
     try {
       const response = await registrationUserApi(formData);
+
       if (response?.success) {
+        dispatch(updateProgress(100));
         setLocalStorage("token", response.token);
         toast.success(response.message);
+        setLocalStorage("user", JSON.stringify(response.user));
+
         setTimeout(() => {
           navigate("/user/dashboard");
         }, 1500);
+      } else {
+        dispatch(updateProgress(100));
+        toast.error(response?.message || "An unexpected error occurred.");
       }
     } catch (error) {
       console.error(error);
       toast.error("An unexpected error occurred.");
+      dispatch(updateProgress(100));
+    } finally {
+      setTimeout(() => {
+        dispatch(hideLoader());
+      }, 2000);
     }
   };
-
   return (
     <div className="auth">
       <div className="intro">
