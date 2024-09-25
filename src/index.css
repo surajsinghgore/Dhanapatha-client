@@ -3,7 +3,7 @@
   padding: 0;
   margin: 0;
 }
-a{
+a {
   text-decoration: none;
 }
 .loader {
@@ -76,11 +76,11 @@ a{
   padding: 0 20px;
   padding-bottom: 1px;
 }
-.commonTitleHeading{
+.commonTitleHeading {
   font-size: 1.3rem;
 }
-.dateFull{
-  font-size: 0.9rem; 
+.dateFull {
+  font-size: 0.9rem;
   padding: 10px 0;
   font-weight: 600;
   text-transform: uppercase;

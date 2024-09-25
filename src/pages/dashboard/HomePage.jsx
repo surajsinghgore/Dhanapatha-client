@@ -22,8 +22,6 @@ const HomePage = () => {
             <CardMenu link="/user/all-transaction" title="See transaction history" icon={MdHistory} />
             <CardMenu link="/" title="Check wallet balance" icon={CiBank} />
             <CardMenu link="/user/all-transaction" title="Check wallet history" icon={CiWallet} />
-
-            
           </div>
         </div>
       </div>

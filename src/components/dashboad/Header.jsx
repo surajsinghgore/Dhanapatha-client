@@ -3,6 +3,7 @@ import { IoSettingsSharp } from "react-icons/io5";
 import { AutoComplete } from "primereact/autocomplete";
 import { useEffect, useState } from "react";
 import { FaSearch } from "react-icons/fa";
+import { Link } from "react-router-dom";
 const Header = () => {
   const [countries, setCountries] = useState([]);
   const [selectedCountries, setSelectedCountries] = useState(null);
@@ -32,7 +33,7 @@ const Header = () => {
   return (
     <header>
       <div className="top">
-        <div className="user">
+      <Link to="/user/profile">  <div className="user">
           <div className="image">
             <img src={Images.user} alt="user" />
           </div>
@@ -40,9 +41,9 @@ const Header = () => {
             <h6>Suraj singh</h6>
             <h5>suraj@gmail.com</h5>
           </div>
-        </div>
+        </div></Link>
         <div className="setting">
-          <IoSettingsSharp />
+        <Link to="/user/profile">  <IoSettingsSharp /></Link>
         </div>
       </div>
 
