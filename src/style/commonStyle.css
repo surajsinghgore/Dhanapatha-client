@@ -4,15 +4,28 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  /* background-color: #008f91; */
   width: 100vw;
   height: 100vh;
 }
-.main .screen{
+.main .screen {
   position: relative;
+  height: 95%;
+  width: 50%;
+  overflow: hidden; 
+}
 
-    /* box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px; */
-height: 95%;
+.main .screen .content {
+  height: 100%; 
+  overflow-y: scroll; 
+}
 
-width: 50%;
+
+.main .screen .content::-webkit-scrollbar {
+  width: 0; 
+  height: 0; 
+}
+
+
+.main .screen .content {
+  scrollbar-width: none; 
 }

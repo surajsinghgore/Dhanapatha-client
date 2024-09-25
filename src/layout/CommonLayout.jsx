@@ -10,8 +10,10 @@ const CommonLayout = ({ children }) => {
     <div className={"main"}>
       <ToastContainer />
       <div className="screen">
-      {loading && <Loader progress={progress} />}
-        {children}
+        <div className="content">
+          {loading && <Loader progress={progress} />}
+          {children}
+        </div>
       </div>
     </div>
   );

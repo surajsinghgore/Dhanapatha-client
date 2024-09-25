@@ -1,11 +1,12 @@
 import logo from '../assets/logo.png';
-import background from '../assets/background.jpg';
+import user from '../assets/user.png';
 
 
 
 
 
 export default {
-    logo,background
+    logo,
+    user,
 }
 

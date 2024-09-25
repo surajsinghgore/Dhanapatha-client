@@ -46,7 +46,7 @@ const Register = () => {
     const simulateProgress = () => {
       let currentProgress = 0;
       const progressInterval = setInterval(() => {
-        currentProgress += 1;
+        currentProgress += 4;
         dispatch(updateProgress(currentProgress));
 
         if (currentProgress >= 95) {
