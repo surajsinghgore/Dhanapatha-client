@@ -10,6 +10,7 @@ import PaymentPage from "../pages/admin/payment/PaymentPage";
 import ShowAllTransactionPage from "../pages/client/AllTranscation/ShowAllTransactionPage";
 import PayPaymentPage from "../pages/client/payment/PayPaymentPage";
 import UserProfile from "../pages/client/Profile/UserProfile";
+import WalletPage from "../pages/client/Profile/WalletPage";
 
 const router = createBrowserRouter([
   {
@@ -80,6 +81,14 @@ const router = createBrowserRouter([
         element: (
           <CommonLayout>
             <UserProfile />
+          </CommonLayout>
+        ),
+      },
+      {
+        path: "wallet",
+        element: (
+          <CommonLayout>
+            <WalletPage />
           </CommonLayout>
         ),
       },

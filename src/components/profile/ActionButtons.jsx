@@ -8,7 +8,7 @@ const ActionButtons = () => {
         <p>Transfer money history</p>
       </button>
       <button className="receive-btn">
-        <span>Receive</span>
+        <span>Received</span>
         <p>Received money history</p>
       </button>
     </div>

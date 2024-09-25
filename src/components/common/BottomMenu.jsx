@@ -10,7 +10,7 @@ const BottomMenu = () => {
   const currentPath = location.pathname;
   return (
     <div className="bottom-menu">
-      <Link className={`menu-item ${currentPath == "/user/profile" ? "active" : ""}`} to="">
+      <Link className={`menu-item ${currentPath == "/user/profile" ? "active" : ""}`} to="/user/profile">
         <FaUser />
         <span>Profile</span>
       </Link>
@@ -18,7 +18,7 @@ const BottomMenu = () => {
         <RiHome2Fill />
         <span>Home</span>
       </Link>
-      <Link className="menu-item" to="">
+      <Link className={`menu-item ${currentPath == "/user/wallet" ? "active" : ""}`} to="/user/wallet">
         <PiWalletFill />
         <span>Wallet</span>
       </Link>
