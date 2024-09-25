@@ -117,7 +117,6 @@ header .search {
   width: 100%;
   border-radius: 5px;
   box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
-  margin-bottom: 50px;
   padding-bottom: 10px;
 }
 .transaction h2 {
@@ -127,43 +126,43 @@ header .search {
   font-weight: 500;
 }
 
-.transactionCardContainer{
-    width: 100%;
+.transactionCardContainer {
+  width: 100%;
 }
-.transactionCardContainer a{
-    color: rgb(96, 96, 96);
-}
-
-.transactionCardContainer .transactionCard{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 20px;
-    gap: 20px;
-}
-.transactionCardContainer .transactionCard .img img{
-    width: 45px;
-    height: 45px;
-    border-radius: 60px;
-}
-.transactionCardContainer .transactionCard  .texts{
-    flex: 1;
-    font-size: 0.9rem;
-}
-.transactionCardContainer .transactionCard  .texts h4{
-    font-weight: 600;
-}
-.transactionCardContainer .transactionCard  .texts h6{
-    padding-top: 6px;
-    font-weight: 500;
+.transactionCardContainer a {
+  color: rgb(96, 96, 96);
 }
 
-.transactionCardContainer .transactionCard  .amount{
-    font-weight: 600;
-    font-size: 1rem;
+.transactionCardContainer .transactionCard {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  gap: 20px;
 }
-.transactionCardContainer .transactionCard:hover{
-    background-color: rgb(245, 245, 245);
+.transactionCardContainer .transactionCard .img img {
+  width: 45px;
+  height: 45px;
+  border-radius: 60px;
+}
+.transactionCardContainer .transactionCard .texts {
+  flex: 1;
+  font-size: 0.9rem;
+}
+.transactionCardContainer .transactionCard .texts h4 {
+  font-weight: 600;
+}
+.transactionCardContainer .transactionCard .texts h6 {
+  padding-top: 6px;
+  font-weight: 500;
+}
+
+.transactionCardContainer .transactionCard .amount {
+  font-weight: 600;
+  font-size: 1rem;
+}
+.transactionCardContainer .transactionCard:hover {
+  background-color: rgb(245, 245, 245);
 }
 
 .transaction .bottom {
@@ -182,4 +181,44 @@ header .search {
   text-decoration: none;
 }
 
+.otherLink {
+  width: 100%;
+  margin-top: 15px;
+  list-style: none;
+  margin-bottom: 5%;
+}
+.otherLink h2 {
+  font-weight: 500;
+  font-size: 1.3rem;
+}
+.otherContainer {
+  margin-top: 2%;
+}
+.otherContainer li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 5px;
+  gap: 10px;
+}
 
+
+.otherContainer li .icon {
+  font-size: 1.2rem;
+}
+
+.otherContainer li .text {
+  font-size: 1.2rem;
+  flex: 1;
+}
+.otherContainer li .arrow {
+  font-size: 1.2rem;
+}
+.otherContainer li:hover {
+  cursor: pointer;
+  background-color: rgb(245, 245, 245);
+}
+.otherContainer  a{
+  color: rgb(61, 61, 61);
+
+}
