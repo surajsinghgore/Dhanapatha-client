@@ -246,10 +246,10 @@
   }
   
   .modal-content h2 {
-    margin-bottom: 20px;
+    margin-bottom: 20px;  
   }
   
-  .amount-input {
+  .amount-input-modal {
     width: 100%;
     padding: 10px;
     margin-bottom: 20px;
@@ -263,7 +263,7 @@
     gap: 10px;
     justify-content: space-between;
   }
-  .cancel-btn, .submit-btn {
+  .cancel-btn-modal, .submit-btn-modal{
     padding: 12px 25px;
     border: none;
     border-radius: 8px;
@@ -273,18 +273,18 @@
     transition: all 0.3s ease;
   }
   
-  .cancel-btn {
+  .cancel-btn-modal {
     background: linear-gradient(135deg, #ff6a6a, #ff3d3d);
     color: white;
     box-shadow: 0 4px 10px rgba(255, 0, 0, 0.2);
   }
   
-  .cancel-btn:hover {
+  .cancel-btn-modal:hover {
     background: linear-gradient(135deg, #ff3d3d, #ff6a6a);
     box-shadow: 0 6px 15px rgba(255, 0, 0, 0.4);
   }
   
-  .submit-btn {
+  .submit-btn-modal{
     background: linear-gradient(135deg, #4CAF50, #2E7D32);
     color: white;
     box-shadow: 0 4px 10px rgba(0, 128, 0, 0.2);

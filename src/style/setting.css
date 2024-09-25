@@ -137,8 +137,8 @@
   justify-content: space-between;
 }
 
-.cancel-btn,
-.submit-btn {
+.cancel-btn-modal,
+.submit-btn-modal {
   padding: 10px 20px;
   border: none;
   border-radius: 5px;
@@ -148,17 +148,17 @@
   box-sizing: border-box;
 }
 
-.cancel-btn {
+.cancel-btn-modal {
   background-color: #f44336;
   color: white;
 }
 
-.submit-btn {
+.submit-btn-modal {
   background-color: #4caf50;
   color: white;
 }
 
-.cancel-btn:hover,
-.submit-btn:hover {
+.cancel-btn-modal:hover,
+.submit-btn-modal:hover {
   opacity: 0.8;
 }

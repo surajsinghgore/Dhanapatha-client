@@ -13,6 +13,7 @@ import UserProfile from "../pages/client/Profile/UserProfile";
 import WalletPage from "../pages/client/Profile/WalletPage";
 import SettingPage from "../pages/client/Profile/SettingPage";
 import AddAccountForm from "../pages/client/Profile/AddAccountForm";
+import PaymentStatus from "../pages/client/Profile/PaymentStatus";
 
 const router = createBrowserRouter([
   {
@@ -107,6 +108,14 @@ const router = createBrowserRouter([
         element: (
           <CommonLayout>
             <AddAccountForm />
+          </CommonLayout>
+        ),
+      },
+      {
+        path: "payment-status",
+        element: (
+          <CommonLayout>
+            <PaymentStatus />
           </CommonLayout>
         ),
       },

@@ -57,10 +57,10 @@ const ChangePasswordModal = ({ onClose, onChangePassword }) => {
           className="password-input"
         />
         <div className="modal-actions">
-          <button onClick={onClose} className="cancel-btn">
+          <button onClick={onClose} className="cancel-btn-modal">
             Cancel
           </button>
-          <button onClick={handleSubmit} className="submit-btn">
+          <button onClick={handleSubmit} className="submit-btn-modal">
             Change Password
           </button>
         </div>

@@ -27,12 +27,12 @@ const WithdrawalMoneyModal = ({ onClose, onAddBalance }) => {
     <div className="modal-overlay" onClick={handleClickOutside}>
       <div className="modal-content">
         <h2>Enter Money to Withdrawal </h2>
-        <input type="text" value={amount} onChange={handleAmountChange} placeholder="Enter amount" className="amount-input" />
+        <input type="text" value={amount} onChange={handleAmountChange} placeholder="Enter amount" className="amount-input-modal" />
         <div className="modal-actions">
-          <button onClick={onClose} className="cancel-btn">
+          <button onClick={onClose} className="cancel-btn-modal">
             Cancel
           </button>
-          <button onClick={handleSubmit} className="submit-btn">
+          <button onClick={handleSubmit} className="submit-btn-modal">
             Withdrawal
           </button>
         </div>

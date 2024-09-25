@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import "../../../style/paypaymentpage.css";
 import { IoArrowBack } from "react-icons/io5";
 import Images from "../../../constants/Images";
 import { FaLongArrowAltRight } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 const PayPaymentPage = () => {
   const [amount, setAmount] = useState("");
   const navigate = useNavigate();
@@ -63,7 +63,9 @@ const PayPaymentPage = () => {
         ))}
       </div>
 
-      <button className="submit-btn">Pay</button>
+      <Link to="/user/payment-status">
+        <button className="submit-btn">Pay</button>
+      </Link>
     </div>
   );
 };
