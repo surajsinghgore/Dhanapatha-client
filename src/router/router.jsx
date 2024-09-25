@@ -8,6 +8,7 @@ import AuthProtected from "../authorization/AuthProtected";
 import Register from "../pages/auth/Register";
 import PaymentPage from "../pages/admin/payment/PaymentPage";
 import ShowAllTransactionPage from "../pages/client/AllTranscation/ShowAllTransactionPage";
+import PayPaymentPage from "../pages/client/payment/PayPaymentPage";
 
 const router = createBrowserRouter([
   {
@@ -54,6 +55,14 @@ const router = createBrowserRouter([
         element: (
           <CommonLayout>
             <PaymentPage />
+          </CommonLayout>
+        ),
+      },
+      {
+        path: "pay-payment/:user",
+        element: (
+          <CommonLayout>
+            <PayPaymentPage />
           </CommonLayout>
         ),
       },

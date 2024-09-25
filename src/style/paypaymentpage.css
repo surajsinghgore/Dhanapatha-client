@@ -1,0 +1,132 @@
+.payment-form {
+    width: 100%;
+    margin: 50px auto;
+    background-color: #d2eeff;
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    gap: 10px;
+
+  }
+  
+  .back-btn {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+  }
+  
+  .user-info {
+    display: flex;
+    justify-content: center;
+    flex: 1;
+    gap: 10px;
+    align-items: center;
+  }
+  
+  .avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+  }
+  
+  .paying-text {
+    font-size: 2rem; 
+    margin-right: 2%;
+    font-weight: 500;
+  }
+  .text-pay{
+    text-align: center;
+    font-weight: 600;
+    margin-bottom: 5%;
+  }
+  .amount-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 40px;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+  
+  .currency-symbol {
+    margin-right: 5px;
+  }
+  
+  .amount-input {
+    border: none;
+    background: none;
+    text-align: center;
+    font-size: 40px;
+    width: 150px;
+    outline: none;
+  }
+  
+  .description-section {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+  
+  .description-input {
+    border: none;
+    border-radius: 10px;
+    padding: 10px;
+    width: 90%;
+    font-size: 16px;
+    text-align: center;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    outline: none;
+  }
+  
+  .keypad {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  
+  .keypad-btn {
+    background-color: #fff;
+    border: none;
+    font-size: 20px;
+    padding: 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.2s ease;
+  }
+  
+  .keypad-btn:hover {
+    background-color: #86c0ea;
+  }
+  
+  .submit-btn {
+    display: block;
+    width: 100%;
+    background-color: #10cfe8;
+    color: white;
+    border: none;
+    padding: 15px;
+    border-radius: 10px;
+    font-size: 24px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+  
+  .submit-btn:hover {
+    background-color: #356ac3;
+  }
+  

@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import Images from "../../constants/Images";
+
 import "../../style/payment.css";
 import { IoArrowBack } from "react-icons/io5";
 const CommonHeader = ({link,title}) => {

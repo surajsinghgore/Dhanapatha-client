@@ -2,6 +2,7 @@ import PaymentHeader from "../../../components/payment/PaymentHeader";
 import LeftPaymentCard from "../../../components/cards/LeftPaymentCard";
 import RightPaymentCard from "../../../components/cards/RightPaymentCard";
 import { useEffect, useRef } from "react";
+import { Link } from "react-router-dom";
 const PaymentPage = () => {
   const simpleBarRef = useRef(null);
   useEffect(() => {
@@ -23,7 +24,7 @@ const PaymentPage = () => {
       </div>
 
       <div className="bottomMenu">
-        <div className="pay">Pay</div>
+        <Link to="/user/pay-payment/wreww"><div className="pay">Pay</div></Link>
         <div className="pay">Request</div>
       </div>
     </div>
