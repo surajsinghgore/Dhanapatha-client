@@ -58,7 +58,7 @@ const Login = () => {
       const response = await loginUserApi(formData);
 
       if (response?.success) {
-        console.log(response.user);
+
         dispatch(updateProgress(100));
         setLocalStorage("token", response.token);
         setLocalStorage("user", JSON.stringify(response.user));
