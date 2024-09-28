@@ -4,26 +4,18 @@ import { AutoComplete } from "primereact/autocomplete";
 import { useEffect, useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import { findUserByUsernameAndEmail } from "../../utils/services/user/UserServices";
 const Header = () => {
   const [countries, setCountries] = useState([]);
   const [selectedCountries, setSelectedCountries] = useState(null);
   const [filteredCountries, setFilteredCountries] = useState(null);
 
-  const search = (event) => {
-    // Timeout to emulate a network connection
-    setTimeout(() => {
-      let _filteredCountries;
+  const search = async(event) => {
+    let res=await findUserByUsernameAndEmail(event.query);
+    let data=await res.json();
+    console.log(data)
 
-      if (!event.query.trim().length) {
-        _filteredCountries = [...countries];
-      } else {
-        _filteredCountries = countries.filter((country) => {
-          return country.name.toLowerCase().startsWith(event.query.toLowerCase());
-        });
-      }
 
-      setFilteredCountries(_filteredCountries);
-    }, 250);
   };
 
   useEffect(() => {
