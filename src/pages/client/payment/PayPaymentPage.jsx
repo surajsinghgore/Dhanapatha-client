@@ -9,7 +9,11 @@ import { toast } from "react-toastify";
 import tickSound from "../../../assets/tune/complete.mp3";
 import { transferMoney } from "../../../utils/services/user/PaymentServices";
 
+import { useDispatch } from "react-redux";
+import { showLoader, updateProgress, hideLoader } from "../../../redux/Slices/LoaderSlice";
+
 const PayPaymentPage = () => {
+  const dispatch = useDispatch();
   const [audio] = useState(new Audio(tickSound));
   const [amount, setAmount] = useState("");
   const navigate = useNavigate();
@@ -49,6 +53,21 @@ const PayPaymentPage = () => {
       toast.warn("The amount must be above 41");
       return;
     }
+
+    dispatch(showLoader());
+    const simulateProgress = () => {
+      let currentProgress = 0;
+      const progressInterval = setInterval(() => {
+        currentProgress += 4;
+        dispatch(updateProgress(currentProgress));
+
+        if (currentProgress >= 95) {
+          clearInterval(progressInterval);
+        }
+      }, 100);
+    };
+
+    simulateProgress();
     try {
       let body = { receiverEmail: getLocalStorageJSON("paymentUser").email, amount: amount };
       let res = await transferMoney(body);
@@ -63,6 +82,11 @@ const PayPaymentPage = () => {
       }
     } catch (error) {
       console.log(error);
+      dispatch(updateProgress(100));
+    } finally {
+      setTimeout(() => {
+        dispatch(hideLoader());
+      }, 2000);
     }
   };
 

@@ -5,8 +5,12 @@ import { useEffect, useRef, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { findReceiverTransaction } from "../../../utils/services/user/PaymentServices";
 import { getLocalStorage, getLocalStorageJSON } from "../../../utils/LocalStorage";
+import { useDispatch } from "react-redux";
+import { showLoader, updateProgress, hideLoader } from "../../../redux/Slices/LoaderSlice";
+
 
 const PaymentPage = () => {
+  const dispatch = useDispatch();
   const { user } = useParams();
   const [data, setData] = useState([]);
   const activeUserId = getLocalStorage("user") ? getLocalStorageJSON("user")._id : "";
@@ -25,11 +29,31 @@ const PaymentPage = () => {
   // Fetch transactions on component mount
   useEffect(() => {
     (async () => {
+      dispatch(showLoader());
+      const simulateProgress = () => {
+        let currentProgress = 0;
+        const progressInterval = setInterval(() => {
+          currentProgress += 4;
+          dispatch(updateProgress(currentProgress));
+
+          if (currentProgress >= 95) {
+            clearInterval(progressInterval);
+          }
+        }, 100);
+      };
+
+      simulateProgress();
+
       try {
         const resData = await findReceiverTransaction(user);
         setData(resData.transactions);
       } catch (error) {
-        console.error("Error fetching transactions:", error);
+        console.log(error);
+        dispatch(updateProgress(100));
+      } finally {
+        setTimeout(() => {
+          dispatch(hideLoader());
+        }, 2000);
       }
     })();
   }, [user]); // Include 'user' as a dependency
@@ -54,13 +78,7 @@ const PaymentPage = () => {
             {data.map((record, index) => (
               <div key={index}>
                 <p className="paymentDate">{todayDate === record.date ? "Today" : record.date}</p>
-                {record.transactions.map((textData, i) => (
-                  textData.senderId === activeUserId ? (
-                    <RightPaymentCard key={i} data={textData} />
-                  ) : (
-                    <LeftPaymentCard key={i} data={textData} />
-                  )
-                ))}
+                {record.transactions.map((textData, i) => (textData.senderId === activeUserId ? <RightPaymentCard key={i} data={textData} /> : <LeftPaymentCard key={i} data={textData} />))}
               </div>
             ))}
           </>

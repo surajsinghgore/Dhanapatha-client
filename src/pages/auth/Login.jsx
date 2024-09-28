@@ -39,7 +39,6 @@ const Login = () => {
 
   const onSubmit = async (formData) => {
     dispatch(showLoader());
-
     const simulateProgress = () => {
       let currentProgress = 0;
       const progressInterval = setInterval(() => {
