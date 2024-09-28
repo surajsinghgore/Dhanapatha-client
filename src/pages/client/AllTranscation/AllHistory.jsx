@@ -42,7 +42,7 @@ const ShowAllHistoryPage = () => {
 
   return (
     <div>
-      <CommonHeader link="/user/dashboard" title="All Activities Details" />
+      <CommonHeader link="/user/dashboard" title="All Activities" />
 
       <div className="white">
         <div className="transactionCardContainer">

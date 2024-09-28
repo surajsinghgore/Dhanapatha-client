@@ -3,6 +3,7 @@ import { formatDate } from "../../utils/formatDate";
 import { getLocalStorageJSON } from "../../utils/LocalStorage";
 
 const HistoryCard = ({ data }) => {
+  console.log(data);
   let date = formatDate(data.createdAt);
   let currentUser = getLocalStorageJSON("user");
   return (
@@ -17,20 +18,23 @@ const HistoryCard = ({ data }) => {
           ) : (
             <>
               {data.type == "refund" ? "From " : <> {currentUser.username == data?.receiver?.username ? "From " : "To "}</>}
-              {currentUser.username == data?.receiver?.username ? <>{data?.senderUsername}</> : <>{data?.receiver?.username}</>}{" "}
+              {currentUser.username == data?.receiver?.username ? <>{data?.sender?.username}</> : <>{data?.receiver?.username}</>}{" "}
             </>
           )}
         </h4>
         <h6>
-          {date} {data.type == "addMoney" ? " Add Money " : <>{data.type == "refund" ? "Refund" : "Paid"}</>}
+          {date} {data.type == "addMoney" ? " Add Money " : <>{data.type == "refund" ? "Refund" : <>{currentUser.username == data?.receiver?.username ? "received " : "Paid"}</>}</>}
         </h6>
       </div>
       {data.type == "addMoney" ? (
-        <span className="green">+ ₹{data.amount}</span>
+        <span className="green">₹{data.amount}</span>
       ) : (
         <>
           {data.type == "refund" ? (
-            <span className="orange">+ ₹{data.senderReceived}</span>
+            <div className="amount">
+              {" "}
+              <span className="orange">+ ₹{data.senderReceived}</span>
+            </div>
           ) : (
             <div className="amount">{currentUser.username == data?.receiver?.username ? <span className="green">+ ₹{data.amount}</span> : <span className="red">- ₹{data.amount}</span>} </div>
           )}
