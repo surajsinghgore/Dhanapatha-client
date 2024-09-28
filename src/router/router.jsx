@@ -64,7 +64,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "pay-payment/:user",
+        path: "pay-payment",
         element: (
           <CommonLayout>
             <PayPaymentPage />

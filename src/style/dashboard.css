@@ -80,12 +80,15 @@ header .search {
   display: flex;
   padding: 14px 0;
   align-items: center;
-  justify-content: space-between;
+  gap: 15px;
 }
 
 .usersRecentList a {
   text-decoration: none;
   color: rgb(42, 42, 42);
+}
+.usersRecentList .recentCard{
+  cursor: pointer;
 }
 .usersRecentList .recentCard .profile {
   position: relative;
@@ -111,6 +114,7 @@ header .search {
   font-size: 0.9rem;
   padding-top: 6%;
   font-weight: 500;
+  text-align: center;
 }
 
 .transaction {

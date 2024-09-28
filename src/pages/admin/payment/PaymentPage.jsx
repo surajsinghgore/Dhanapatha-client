@@ -8,7 +8,6 @@ import { getLocalStorage, getLocalStorageJSON } from "../../../utils/LocalStorag
 import { useDispatch } from "react-redux";
 import { showLoader, updateProgress, hideLoader } from "../../../redux/Slices/LoaderSlice";
 
-
 const PaymentPage = () => {
   const dispatch = useDispatch();
   const { user } = useParams();
@@ -86,7 +85,7 @@ const PaymentPage = () => {
       </div>
 
       <div className="bottomMenu">
-        <Link to="/user/pay-payment/wreww">
+        <Link to="/user/pay-payment">
           <div className="pay">Pay</div>
         </Link>
         <div className="pay">Request</div>
