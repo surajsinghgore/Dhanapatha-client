@@ -17,7 +17,8 @@ const HistoryCard = ({ data }) => {
             <>Money Added</>
           ) : (
             <>
-              {data.type == "refund" ? "From " : <> {currentUser.username == data?.receiver?.username ? "From " : "To "}</>}
+              {data.type == "refund" ? <> {currentUser.username == data?.receiver?.username ? "By " : "From "}
+              </> : <> {currentUser.username == data?.receiver?.username ? "From " : "To "}</>}
               {currentUser.username == data?.receiver?.username ? <>{data?.sender?.username}</> : <>{data?.receiver?.username}</>}{" "}
             </>
           )}
@@ -33,7 +34,8 @@ const HistoryCard = ({ data }) => {
           {data.type == "refund" ? (
             <div className="amount">
               {" "}
-              <span className="orange">+ ₹{data.senderReceived}</span>
+              {currentUser.username == data?.receiver?.username ? <span className="orange">+ ₹{data.receiverReceived} </span> : <span className="orange">+ ₹{data.senderReceived} </span>}
+            ({data?.amount})
             </div>
           ) : (
             <div className="amount">{currentUser.username == data?.receiver?.username ? <span className="green">+ ₹{data.amount}</span> : <span className="red">- ₹{data.amount}</span>} </div>

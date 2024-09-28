@@ -21,7 +21,7 @@ const HomePage = () => {
           <div className="otherContainer">
             <CardMenu link="/user/all-transaction" title="See transaction history" icon={MdHistory} />
             <CardMenu link="/" title="Check wallet balance" icon={CiBank} />
-            <CardMenu link="/user/all-transaction" title="Check wallet history" icon={CiWallet} />
+            <CardMenu link="/user/all-history" title="Check wallet history" icon={CiWallet} />
           </div>
         </div>
       </div>
