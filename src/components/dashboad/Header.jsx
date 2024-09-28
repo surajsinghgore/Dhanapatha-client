@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import { findUserByUsernameAndEmail } from "../../utils/services/user/UserServices";
+import { setLocalStorage } from "../../utils/LocalStorage";
 const Header = () => {
   const navigate = useNavigate();
   const [selectedUser, setSelectedUser] = useState(null);
@@ -22,6 +23,7 @@ const Header = () => {
   };
 
   const searchUserClick = (item) => {
+    setLocalStorage("paymentUser", JSON.stringify(item));
     navigate(`/user/payment/${item.email}`);
   };
 

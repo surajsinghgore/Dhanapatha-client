@@ -1,16 +1,16 @@
 import { useState, useEffect } from "react";
 import "../../../style/paymentstatus.css";
 import tickSound from "../../../assets/tune/complete.mp3";
+import { useNavigate } from "react-router-dom";
+import {  getLocalStorageJSON } from "../../../utils/LocalStorage";
 
 function PaymentStatus() {
   const [showTick, setShowTick] = useState(false);
-  const [audio] = useState(new Audio(tickSound));
+  const navigate = useNavigate();
 
   const handleShowTick = () => {
     setShowTick(true);
-    audio.play().catch((error) => {
-      console.error("Audio play failed:", error);
-    });
+   
   };
 
   useEffect(() => {
@@ -23,6 +23,15 @@ function PaymentStatus() {
     return () => clearTimeout(timer);
   }, []);
 
+
+  // redirect auto
+  useEffect(()=>{
+setTimeout(()=>{
+  navigate(`/user/payment-status`);
+  navigate(`/user/payment/${getLocalStorageJSON("paymentUser").email}`);
+
+},2500)
+  },[])
   return (
     <div className="container" onClick={handleShowTick}>
       {showTick && (

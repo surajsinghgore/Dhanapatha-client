@@ -3,15 +3,22 @@ import "../../../style/paypaymentpage.css";
 import { IoArrowBack } from "react-icons/io5";
 import Images from "../../../constants/Images";
 import { FaLongArrowAltRight } from "react-icons/fa";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { getLocalStorageJSON } from "../../../utils/LocalStorage";
+import { toast } from "react-toastify";
+import tickSound from "../../../assets/tune/complete.mp3";
+import { transferMoney } from "../../../utils/services/user/PaymentServices";
+
 const PayPaymentPage = () => {
+  const [audio] = useState(new Audio(tickSound));
   const [amount, setAmount] = useState("");
   const navigate = useNavigate();
+
   const handleAmountChange = (e) => {
     const { value } = e.target;
 
-    // Only allow digits and a single decimal point
-    if (/^\d*\.?\d*$/.test(value)) {
+    // Only allow digits
+    if (/^\d*$/.test(value)) {
       setAmount(value);
     }
   };
@@ -21,10 +28,8 @@ const PayPaymentPage = () => {
       // Handle backspace (remove last character)
       setAmount(amount.slice(0, -1));
     } else if (key === ".") {
-      // Only add a decimal point if it doesn't already exist
-      if (!amount.includes(".")) {
-        setAmount(amount + key);
-      }
+      // Replace the decimal point with "00"
+      setAmount(amount + "00");
     } else {
       // Append clicked number
       setAmount(amount + key);
@@ -34,6 +39,33 @@ const PayPaymentPage = () => {
   const goBack = () => {
     navigate(-1);
   };
+
+  const payAmount = async () => {
+    if (amount === "") {
+      toast.warn("Please enter amount to pay");
+      return;
+    }
+    if (parseFloat(amount) < 41) {
+      toast.warn("The amount must be above 41");
+      return;
+    }
+    try {
+      let body = { receiverEmail: getLocalStorageJSON("paymentUser").email, amount: amount };
+      let res = await transferMoney(body);
+      if (res.success) {
+        toast.success(`Money Transfer Successfully to ${getLocalStorageJSON("paymentUser").email}`);
+        setTimeout(() => {
+          navigate("/user/payment-status");
+          audio.play().catch((error) => {
+            console.error("Audio play failed:", error);
+          });
+        }, 2000);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div className="payment-form">
       <div className="header">
@@ -48,7 +80,7 @@ const PayPaymentPage = () => {
           <img src={Images.user} alt="User Avatar" className="avatar" />
         </div>
       </div>
-      <p className="text-pay">paying to Suraj Singh </p>
+      <p className="text-pay">paying to {getLocalStorageJSON("paymentUser").username}</p>
 
       <div className="amount-section">
         <span className="currency-symbol">₹</span>
@@ -56,16 +88,16 @@ const PayPaymentPage = () => {
       </div>
 
       <div className="keypad">
-        {[1, 2, 3, 4, 5, 6, 7, 8, 9, ".", 0, "X"].map((key, index) => (
+        {[1, 2, 3, 4, 5, 6, 7, 8, 9, "00", 0, "X"].map((key, index) => (
           <button key={index} className="keypad-btn" onClick={() => handleKeypadClick(key)}>
             {key}
           </button>
         ))}
       </div>
 
-      <Link to="/user/payment-status">
-        <button className="submit-btn">Pay</button>
-      </Link>
+      <button className="submit-btn" onClick={() => payAmount()}>
+        Pay
+      </button>
     </div>
   );
 };

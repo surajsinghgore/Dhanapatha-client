@@ -7,6 +7,15 @@ export const getLocalStorage = (key) => {
         return null;
     }
 };
+export const getLocalStorageJSON = (key) => {
+    try {
+        const value = localStorage.getItem(key);
+        return JSON.parse(value) || null; 
+    } catch (error) {
+        console.error('local storage get error', error);
+        return null;
+    }
+};
 
 export const setLocalStorage = (key, value) => {
     try {
