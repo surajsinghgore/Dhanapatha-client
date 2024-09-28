@@ -20,3 +20,12 @@ export const recentUsers = async () => {
     toast.error(error?.response?.data?.message);
   }
 };
+export const getTransaction = async () => {
+  try {
+    const res = await axiosInstance.get(`/v1/account/get-transaction`);
+    return res.data;
+  } catch (error) {
+    console.log(error?.response?.data?.message);
+    toast.error(error?.response?.data?.message);
+  }
+};

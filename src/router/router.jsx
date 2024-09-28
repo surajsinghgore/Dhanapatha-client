@@ -14,6 +14,7 @@ import WalletPage from "../pages/client/Profile/WalletPage";
 import SettingPage from "../pages/client/Profile/SettingPage";
 import AddAccountForm from "../pages/client/Profile/AddAccountForm";
 import PaymentStatus from "../pages/client/Profile/PaymentStatus";
+import ShowAllHistoryPage from "../pages/client/AllTranscation/AllHistory";
 
 const router = createBrowserRouter([
   {
@@ -76,6 +77,14 @@ const router = createBrowserRouter([
         element: (
           <CommonLayout>
             <ShowAllTransactionPage />
+          </CommonLayout>
+        ),
+      },
+      {
+        path: "all-history",
+        element: (
+          <CommonLayout>
+            <ShowAllHistoryPage />
           </CommonLayout>
         ),
       },

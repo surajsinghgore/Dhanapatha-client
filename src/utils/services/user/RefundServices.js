@@ -9,3 +9,11 @@ export const refundApi = async (payload) => {
     toast.error(error?.response?.data?.message);
   }
 };
+export const historyApi = async () => {
+  try {
+    const res = await axiosInstance.get("/v1/refund/history");
+    return res.data;
+  } catch (error) {
+    toast.error(error?.response?.data?.message);
+  }
+};

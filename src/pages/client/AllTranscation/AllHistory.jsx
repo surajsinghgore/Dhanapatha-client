@@ -1,13 +1,14 @@
-import TransactionCard from "../../../components/cards/TransactionCard";
 import CommonHeader from "../../../components/common/CommonHeader";
 import { useDispatch } from "react-redux";
 import { showLoader, updateProgress, hideLoader } from "../../../redux/Slices/LoaderSlice";
-import { getTransaction } from "../../../utils/services/user/UserServices";
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-const ShowAllTransactionPage = () => {
+import HistoryCard from "../../../components/cards/HistoryCard";
+import { historyApi } from "../../../utils/services/user/RefundServices";
+import { formatDateStr, getCurrentDate } from "../../../utils/formatDate";
+const ShowAllHistoryPage = () => {
   const dispatch = useDispatch();
-  const [transaction, setTransaction] = useState([]);
+  let todayDate = getCurrentDate();
+  const [history, setHistory] = useState([]);
   useEffect(() => {
     (async () => {
       dispatch(showLoader());
@@ -26,8 +27,8 @@ const ShowAllTransactionPage = () => {
       simulateProgress();
 
       try {
-        const resData = await getTransaction();
-        setTransaction(resData.transactions);
+        const resData = await historyApi();
+        setHistory(resData.history.slice(0, 5));
       } catch (error) {
         console.log(error);
         dispatch(updateProgress(100));
@@ -41,24 +42,25 @@ const ShowAllTransactionPage = () => {
 
   return (
     <div>
-      <CommonHeader link="/user/dashboard" title="All Transaction Details" />
+      <CommonHeader link="/user/dashboard" title="All Activities Details" />
 
       <div className="white">
         <div className="transactionCardContainer">
-          {/* <p className="dateFull">26 december 2024</p> */}
-          {transaction.length != 0 && (
+          {history.length != 0 && (
             <>
               {" "}
-              {/* <h2>Recent Activity</h2> */}
-              <div className="transactionCardContainer">
-                {transaction.map((payment) => {
-                  return (
-                    <div key={payment.transactionId}>
-                      <TransactionCard data={payment} />
+              {history.map((payment,index) => {
+                return (
+                  <div key={index}>
+                    <p className="dateFull">{todayDate == payment.date ? "Today" : formatDateStr(payment.date)} </p>
+                    <div className="transactionCardContainer" key={payment.date}>
+                      {payment.allData.slice(0, 5).map((item, index) => (
+                        <HistoryCard key={index} data={item} />
+                      ))}
                     </div>
-                  );
-                })}
-              </div>
+                  </div>
+                );
+              })}
             </>
           )}
         </div>
@@ -67,4 +69,4 @@ const ShowAllTransactionPage = () => {
   );
 };
 
-export default ShowAllTransactionPage;
+export default ShowAllHistoryPage;

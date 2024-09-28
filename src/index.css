@@ -73,7 +73,8 @@ a {
 }
 .white {
   background-color: #fff;
-  padding: 0 20px;
+  padding: 0 10px;
+  margin-top: -2%;
   padding-bottom: 1px;
 }
 .commonTitleHeading {
@@ -98,4 +99,14 @@ a {
 
 li.p-autocomplete-item {
   padding: 10px !important;
+}
+
+.green{
+  color: rgb(8, 176, 95);
+}
+.red{
+  color: red;
+}
+.orange{
+  color: rgb(6, 81, 230);
 }
