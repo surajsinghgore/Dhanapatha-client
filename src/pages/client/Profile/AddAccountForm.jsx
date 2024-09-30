@@ -3,8 +3,10 @@ import "../../../style/setting.css";
 import CommonHeader from "../../../components/common/CommonHeader";
 import { BankAccountApi, getBankAccountApi, UpdateBankAccountApi } from "../../../utils/services/user/PaymentServices";
 import { toast } from "react-toastify";
-
+import { useDispatch, useSelector } from "react-redux";
+import { showLoader, updateProgress, hideLoader } from "../../../redux/Slices/LoaderSlice";
 const AddAccountForm = () => {
+  const dispatch = useDispatch();
   const [accountDetails, setAccountDetails] = useState({
     accountHolderName: "",
     accountNumber: "",
@@ -19,12 +21,27 @@ const AddAccountForm = () => {
   };
   const getBankAccount = async () => {
     try {
+      dispatch(showLoader());
+      const simulateProgress = () => {
+        let currentProgress = 0;
+        const progressInterval = setInterval(() => {
+          currentProgress += 4;
+          dispatch(updateProgress(currentProgress));
+
+          if (currentProgress >= 95) {
+            clearInterval(progressInterval);
+          }
+        }, 100);
+      };
+
+      simulateProgress();
+
       let res = await getBankAccountApi();
       
       if (res.status && res.message !== "No bank account details found.") {
-        setBankData([]); // No bank details found, so it's an empty array
+        setBankData([]);
       } else if (res.bankAccountDetails) {
-        setBankData([res.bankAccountDetails]); // Wrap in an array if it’s an object
+        setBankData([res.bankAccountDetails]); 
         setAccountDetails({
           accountHolderName: res.bankAccountDetails.accountHolderName || "",
           ifscCode: res.bankAccountDetails.ifscCode || "",
@@ -33,11 +50,16 @@ const AddAccountForm = () => {
           bankName: res.bankAccountDetails.bankName || "",
         });
       } else {
-        setBankData([]); // Set to an empty array if no bankAccountDetails exist
+        setBankData([]); 
       }
     } catch (error) {
       console.log(error);
-      setBankData([]); // Fallback to an empty array in case of an error
+      setBankData([]);
+    }
+    finally{
+      setTimeout(() => {
+        dispatch(hideLoader());
+      }, 2000);
     }
   };
   // Regular expressions for validation
@@ -82,6 +104,20 @@ const AddAccountForm = () => {
     if (!isValid) return;
 
     if (bankdata.length === 0) {
+      dispatch(showLoader());
+      const simulateProgress = () => {
+        let currentProgress = 0;
+        const progressInterval = setInterval(() => {
+          currentProgress += 4;
+          dispatch(updateProgress(currentProgress));
+
+          if (currentProgress >= 95) {
+            clearInterval(progressInterval);
+          }
+        }, 100);
+      };
+
+      simulateProgress();
       let body = {
         accountHolderName: accountDetails.accountHolderName,
         accountNumber: accountDetails.accountNumber,
@@ -91,10 +127,28 @@ const AddAccountForm = () => {
       };
       let res = await BankAccountApi(body);
       if (res.status) {
-        getBankAccount( )
+        getBankAccount()
         toast.success("Bank Account added successfully");
+        setTimeout(() => {
+          dispatch(hideLoader());
+        }, 2000);
       }
     } else {
+
+      dispatch(showLoader());
+      const simulateProgress = () => {
+        let currentProgress = 0;
+        const progressInterval = setInterval(() => {
+          currentProgress += 4;
+          dispatch(updateProgress(currentProgress));
+
+          if (currentProgress >= 95) {
+            clearInterval(progressInterval);
+          }
+        }, 100);
+      };
+
+      simulateProgress();
       let body = {
         accountHolderName: accountDetails.accountHolderName,
         accountNumber: accountDetails.accountNumber,
@@ -107,6 +161,11 @@ const AddAccountForm = () => {
         getBankAccount()
         toast.success("Bank Account updated successfully");
       }
+    
+        setTimeout(() => {
+          dispatch(hideLoader());
+        }, 2000);
+      
     }
   };
 

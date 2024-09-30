@@ -12,6 +12,7 @@ import { useDispatch } from "react-redux";
 import { showLoader, updateProgress, hideLoader } from "../../../redux/Slices/LoaderSlice";
 import { toast } from "react-toastify";
 import ChangePasswordModal from "../../../components/modal/ChangePasswordModal"; // Import the modal component
+import { changePasswordApi } from "../../../utils/services/user/UserServices";
 
 const SettingPage = () => {
   const [isChangePasswordModalOpen, setChangePasswordModalOpen] = useState(false);
@@ -43,11 +44,33 @@ const SettingPage = () => {
     }, 2000);
   };
 
-  const handleChangePassword = (currentPassword, newPassword) => {
-    // Add your logic to handle password change here
+  const handleChangePassword = async (currentPassword, newPassword) => {
     console.log("Changing password", { currentPassword, newPassword });
-    toast.success("Password changed successfully!"); // Show success message
-    setChangePasswordModalOpen(false); // Close modal after success
+    try {
+      const simulateProgress = () => {
+        let currentProgress = 0;
+        const progressInterval = setInterval(() => {
+          currentProgress += 5;
+          dispatch(updateProgress(currentProgress));
+
+          if (currentProgress >= 95) {
+            clearInterval(progressInterval);
+          }
+        }, 100);
+      };
+
+      simulateProgress();
+      let body = { oldPassword: currentPassword, newPassword: newPassword };
+      let res = await changePasswordApi(body);
+      if (res.status) {
+        toast.success(res.message);
+        setChangePasswordModalOpen(false);
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      dispatch(hideLoader());
+    }
   };
 
   return (

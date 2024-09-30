@@ -38,3 +38,12 @@ export const getBalance = async () => {
     toast.error(error?.response?.data?.message);
   }
 };
+export const changePasswordApi = async (payload) => {
+  try {
+    const res = await axiosInstance.patch(`/v1/user/change-password`,payload);
+    return res.data;
+  } catch (error) {
+    console.log(error?.response?.data?.message);
+    toast.error(error?.response?.data?.message);
+  }
+};
