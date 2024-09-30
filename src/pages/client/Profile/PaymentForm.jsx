@@ -4,16 +4,17 @@ import { loadStripe } from "@stripe/stripe-js";
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import { toast } from "react-toastify";
 import { addMoneyApi } from "../../../utils/services/user/PaymentServices";
-
+import { useDispatch } from "react-redux";
+import { showLoader, updateProgress, hideLoader } from "../../../redux/Slices/LoaderSlice";
 const stripePromise = loadStripe("pk_test_51Q0h36Ru6GkJxypiKWTVhEfFFn6QbWP7PpM0gHwpgL9JVcgUi6UrHW6cxdjZOVblRSC56Xy5GwlcPHHZ6T6ILFPS00SpAxYfBb"); // Replace with your Stripe public key
 
 const StripePaymentPage = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
   const { clientSecret, amount } = location.state || {};
 
   const handlePaymentSuccess = async (paidAmount, paymentIntent) => {
-   
     try {
       let body = {
         amount: paidAmount,
@@ -48,6 +49,21 @@ const StripePaymentPage = () => {
       const cardElement = elements.getElement(CardElement);
 
       try {
+        dispatch(showLoader());
+
+        const simulateProgress = () => {
+          let currentProgress = 0;
+          const progressInterval = setInterval(() => {
+            currentProgress += 5;
+            dispatch(updateProgress(currentProgress));
+
+            if (currentProgress >= 95) {
+              clearInterval(progressInterval);
+            }
+          }, 100);
+        };
+
+        simulateProgress();
         const { error, paymentIntent } = await stripe.confirmCardPayment(clientSecret, {
           payment_method: {
             card: cardElement,
@@ -58,10 +74,14 @@ const StripePaymentPage = () => {
           toast.error(`Payment failed: ${error.message}`);
         } else if (paymentIntent.status === "succeeded") {
           toast.success("Payment successful!");
-          handlePaymentSuccess(amount, paymentIntent); // Call the success handler
+          handlePaymentSuccess(amount, paymentIntent); 
         }
       } catch (error) {
+        console.log(error);
         toast.error("An error occurred during payment.");
+      } finally {
+        dispatch(updateProgress(100));
+        dispatch(hideLoader());
       }
     };
 

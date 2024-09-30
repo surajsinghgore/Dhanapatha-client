@@ -7,7 +7,7 @@ import BottomMenu from "../../../components/common/BottomMenu";
 import WithdrawalMoneyModal from "../../../components/modal/WithdrawalMoneyModal";
 import { toast } from "react-toastify";
 import { getWithdrawalMoney, withdrawalMoney, createPaymentIntent } from "../../../utils/services/user/PaymentServices";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { showLoader, updateProgress, hideLoader } from "../../../redux/Slices/LoaderSlice";
 import { toggleLoader } from "../../../redux/Slices/ApiHitState";
 import { useNavigate } from "react-router-dom";
@@ -15,10 +15,12 @@ import { useNavigate } from "react-router-dom";
 const WalletPage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const isLoading = useSelector((state) => state.apiHit.state);
   const [showModal, setShowModal] = useState(false);
   const [showWithdrawalModal, setShowWithdrawalModal] = useState(false);
   const [transaction, setTransaction] = useState([]);
-  
+
+
   const handleAddBalanceClick = () => {
     setShowModal(true);
   };
@@ -77,7 +79,7 @@ const WalletPage = () => {
         dispatch(hideLoader());
       }
     })();
-  }, []);
+  }, [isLoading]);
 
   const handleWithdrawalBalance = async (amount) => {
     if (amount === "" || parseFloat(amount) <= 0) {
