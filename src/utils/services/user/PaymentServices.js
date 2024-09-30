@@ -31,3 +31,12 @@ export const withdrawalMoney = async (payload) => {
     toast.error(error?.response?.data?.message);
   }
 };
+export const getWithdrawalMoney = async () => {
+  try {
+    const res = await axiosInstance.get(`/v1/stripe/withdraw-money`);
+    return res.data;
+  } catch (error) {
+    console.log(error?.response?.data?.message);
+    toast.error(error?.response?.data?.message);
+  }
+};

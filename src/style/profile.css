@@ -99,11 +99,11 @@
   border-bottom: 1px solid #eee;
 }
 
-.transaction-item.expense .transaction-amount {
+.transaction-item.withdrawal .transaction-amount {
   color: #f34343;
 }
 
-.transaction-item.income .transaction-amount {
+.transaction-item.addMoney .transaction-amount {
   color: #42c742;
 }
 
@@ -212,7 +212,6 @@
 }
 
 .transaction-history h3 {
-  padding-left: 2%;
   margin-bottom: 10px;
 }
 
