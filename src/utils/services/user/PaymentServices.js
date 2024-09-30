@@ -20,3 +20,14 @@ export const findReceiverTransaction = async (email) => {
     toast.error(error?.response?.data?.message);
   }
 };
+
+
+export const withdrawalMoney = async (payload) => {
+  try {
+    const res = await axiosInstance.post(`/v1/stripe/withdraw-money`,payload);
+    return res.data;
+  } catch (error) {
+    console.log(error?.response?.data?.message);
+    toast.error(error?.response?.data?.message);
+  }
+};

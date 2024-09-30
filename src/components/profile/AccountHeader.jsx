@@ -2,11 +2,12 @@ import { useEffect, useState } from "react";
 import Images from "../../constants/Images";
 import "../../style/profile.css";
 import { getBalance } from "../../utils/services/user/UserServices";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { showLoader, updateProgress, hideLoader } from "../../redux/Slices/LoaderSlice";
 const AccountHeader = () => {
   const [amount, setAmount] = useState({ balance: 0 });
   const [integerPart, decimalPart] = amount.balance.toFixed(2).split(".");
+  const isLoading = useSelector((state) => state.apiHit.state);
   const dispatch = useDispatch();
   useEffect(() => {
     (async () => {
@@ -37,7 +38,7 @@ const AccountHeader = () => {
         }, 2000);
       }
     })();
-  }, []);
+  }, [isLoading]);
   return (
     <div className="account-header">
       <div className="header-avatar">

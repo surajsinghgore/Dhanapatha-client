@@ -1,12 +1,18 @@
-import { useState } from 'react';
-import '../../../style/profile.css';
-import Modal from '../../../components/modal/AddWalletMoneyModal';
-import TransactionList from '../../../components/profile/TransactionList';
-import AccountHeader from '../../../components/profile/AccountHeader';
-import BottomMenu from '../../../components/common/BottomMenu';
-import WithdrawalMoneyModal from '../../../components/modal/WithdrawalMoneyModal';
+import { useState } from "react";
+import "../../../style/profile.css";
+import Modal from "../../../components/modal/AddWalletMoneyModal";
+import TransactionList from "../../../components/profile/TransactionList";
+import AccountHeader from "../../../components/profile/AccountHeader";
+import BottomMenu from "../../../components/common/BottomMenu";
+import WithdrawalMoneyModal from "../../../components/modal/WithdrawalMoneyModal";
+import { toast } from "react-toastify";
+import { withdrawalMoney } from "../../../utils/services/user/PaymentServices";
 
+import { useDispatch } from "react-redux";
+import { showLoader, updateProgress, hideLoader } from "../../../redux/Slices/LoaderSlice";
+import { toggleLoader } from "../../../redux/Slices/ApiHitState"
 const WalletPage = () => {
+  const dispatch = useDispatch();
   const [showModal, setShowModal] = useState(false);
   const [showWithdrawalModal, setShowWithdrawalModal] = useState(false);
   const [balance, setBalance] = useState(2148.41);
@@ -24,16 +30,58 @@ const WalletPage = () => {
   const handleCloseWithdrawalModal = () => {
     setShowWithdrawalModal(false);
   };
-// amount
+  // amount
   const handleAddBalance = (amount) => {
     setBalance(balance + amount);
     setShowModal(false);
   };
 
-//   amount 
-  const handleWithdrawalBalance = (amount) => {
+  //   withdrawal amount
+  const handleWithdrawalBalance = async (amount) => {
     setBalance(balance + amount);
-    setShowWithdrawalModal(false);
+    if (amount == "") {
+      toast.error("Please Enter amount");
+      return;
+    }
+    let amountTotal = parseFloat(amount);
+
+    if (amountTotal <= 0) {
+      toast.error("Amount must be at least above 0");
+      return;
+    }
+
+    dispatch(showLoader());
+    const simulateProgress = () => {
+      let currentProgress = 0;
+      const progressInterval = setInterval(() => {
+        currentProgress += 4;
+        dispatch(updateProgress(currentProgress));
+
+        if (currentProgress >= 95) {
+          clearInterval(progressInterval);
+        }
+      }, 100);
+    };
+
+    simulateProgress();
+    let body = { amount: amountTotal };
+    try {
+      let res = await withdrawalMoney(body);
+      if (res.success) {
+        dispatch(toggleLoader());
+
+        toast.success(`Withdrawal of amount ${res.withdrawal.amount} was successful.`);
+        setTimeout(() => {
+          setShowWithdrawalModal(false);
+        }, 1500);
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setTimeout(() => {
+        dispatch(hideLoader());
+      }, 2000);
+    }
   };
 
   return (
@@ -57,14 +105,10 @@ const WalletPage = () => {
         <TransactionList />
       </div>
 
-      {showModal && (
-        <Modal onClose={handleCloseModal} onAddBalance={handleAddBalance} />
-      )}
-      
-      {showWithdrawalModal && (
-        <WithdrawalMoneyModal onClose={handleCloseWithdrawalModal} onAddBalance={handleWithdrawalBalance} />
-      )}
-      
+      {showModal && <Modal onClose={handleCloseModal} onAddBalance={handleAddBalance} />}
+
+      {showWithdrawalModal && <WithdrawalMoneyModal onClose={handleCloseWithdrawalModal} onAddBalance={handleWithdrawalBalance} />}
+
       <BottomMenu />
     </div>
   );

@@ -1,5 +1,7 @@
 import { useState } from "react";
 import "../../style/profile.css";
+import { toast } from "react-toastify";
+
 
 const WithdrawalMoneyModal = ({ onClose, onAddBalance }) => {
   const [amount, setAmount] = useState("");
@@ -11,10 +13,15 @@ const WithdrawalMoneyModal = ({ onClose, onAddBalance }) => {
     }
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
+    if (amount == "") {
+      toast.error("Please Enter amount");
+      return;
+    }
     if (amount) {
       onAddBalance(Number(amount));
     }
+
   };
 
   const handleClickOutside = (e) => {
