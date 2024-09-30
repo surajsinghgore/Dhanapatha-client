@@ -6,20 +6,25 @@ import AccountHeader from "../../../components/profile/AccountHeader";
 import BottomMenu from "../../../components/common/BottomMenu";
 import WithdrawalMoneyModal from "../../../components/modal/WithdrawalMoneyModal";
 import { toast } from "react-toastify";
-import { getWithdrawalMoney, withdrawalMoney } from "../../../utils/services/user/PaymentServices";
-
+import { getWithdrawalMoney, withdrawalMoney, createPaymentIntent } from "../../../utils/services/user/PaymentServices";
 import { useDispatch } from "react-redux";
 import { showLoader, updateProgress, hideLoader } from "../../../redux/Slices/LoaderSlice";
 import { toggleLoader } from "../../../redux/Slices/ApiHitState";
+import { loadStripe } from "@stripe/stripe-js"; // Import Stripe
+
+const stripePromise = loadStripe("pk_test_51Q0h36Ru6GkJxypiKWTVhEfFFn6QbWP7PpM0gHwpgL9JVcgUi6UrHW6cxdjZOVblRSC56Xy5GwlcPHHZ6T6ILFPS00SpAxYfBb"); // Replace with your Stripe public key
+
 const WalletPage = () => {
   const dispatch = useDispatch();
   const [showModal, setShowModal] = useState(false);
   const [showWithdrawalModal, setShowWithdrawalModal] = useState(false);
   const [balance, setBalance] = useState(0);
   const [transaction, setTransaction] = useState([]);
+
   const handleAddBalanceClick = () => {
     setShowModal(true);
   };
+
   const handleWithdrawalBalanceClick = () => {
     setShowWithdrawalModal(true);
   };
@@ -27,22 +32,58 @@ const WalletPage = () => {
   const handleCloseModal = () => {
     setShowModal(false);
   };
+
   const handleCloseWithdrawalModal = () => {
     setShowWithdrawalModal(false);
   };
-  // amount
-  const handleAddBalance = (amount) => {
-    setBalance(balance + amount);
-    setShowModal(false);
+
+  // Add balance
+  const handleAddBalance = async (amount) => {
+
+    if (amount === "" || parseFloat(amount) <= 0) {
+      toast.error("Please enter a valid amount");
+      return; // Prevent adding balance if amount is invalid
+    }
+
+    const stripe = await stripePromise;
+
+    // Create payment intent on the server
+    try {
+      dispatch(showLoader());
+      let body={
+        "amount":amount
+      }
+      const { clientSecret } = await createPaymentIntent(body);
+
+      // Redirect to Stripe for payment
+      const { error } = await stripe.redirectToCheckout({
+        clientSecret,
+      });
+
+      if (error) {
+        toast.error("Payment failed: " + error.message);
+      } else {
+        setBalance(balance + parseFloat(amount));
+        toast.success("Balance added successfully!");
+        // setShowModal(false);
+      }
+    } catch (error) {
+      console.error("Payment error:", error);
+      
+    } finally {
+      dispatch(hideLoader());
+   
+    }
   };
 
-  //   withdrawal amount
+  // Withdrawal amount
   const handleWithdrawalBalance = async (amount) => {
-    setBalance(balance + amount);
-    if (amount == "") {
-      toast.error("Please Enter amount");
+ 
+    if (amount === "") {
+      toast.error("Please enter amount");
       return;
     }
+
     let amountTotal = parseFloat(amount);
 
     if (amountTotal <= 0) {
@@ -51,6 +92,7 @@ const WalletPage = () => {
     }
 
     dispatch(showLoader());
+
     const simulateProgress = () => {
       let currentProgress = 0;
       const progressInterval = setInterval(() => {
@@ -65,6 +107,7 @@ const WalletPage = () => {
 
     simulateProgress();
     let body = { amount: amountTotal };
+
     try {
       let res = await withdrawalMoney(body);
       if (res.success) {
@@ -84,6 +127,7 @@ const WalletPage = () => {
     }
   };
 
+  // Wallet transaction
   useEffect(() => {
     (async () => {
       dispatch(showLoader());
@@ -103,7 +147,6 @@ const WalletPage = () => {
 
       try {
         const resData = await getWithdrawalMoney();
-        console.log(resData);
         if (resData.success) {
           setTransaction(resData);
         }
@@ -117,11 +160,12 @@ const WalletPage = () => {
       }
     })();
   }, []);
+
   return (
     <div className="app-container">
       <AccountHeader />
 
-      <div className="action-buttons ">
+      <div className="action-buttons">
         <button className="send-btn walletBtn" onClick={handleAddBalanceClick}>
           <span>Add Money</span>
           <p>add money to wallet</p>
@@ -134,14 +178,14 @@ const WalletPage = () => {
       </div>
 
       <div className="transaction-history">
-        <h3 style={{marginLeft:"10px"}}>Wallet Money Transaction History</h3>
+        <h3 style={{ marginLeft: "10px" }}>Wallet Money Transaction History</h3>
         {transaction.length === 0 ? (
           <p>No withdrawal record found</p>
         ) : (
           <div className="transaction-list">
             {transaction.transactionSummary.map((record) => (
               <div key={record._id}>
-                <h3 style={{margin:"10px 0"}}>
+                <h3 style={{ margin: "10px 0" }}>
                   Transactions on {record._id} ({record.count} transactions)
                 </h3>
                 {record.records.map((item) => (
@@ -156,7 +200,6 @@ const WalletPage = () => {
       </div>
 
       {showModal && <Modal onClose={handleCloseModal} onAddBalance={handleAddBalance} />}
-
       {showWithdrawalModal && <WithdrawalMoneyModal onClose={handleCloseWithdrawalModal} onAddBalance={handleWithdrawalBalance} />}
 
       <BottomMenu />

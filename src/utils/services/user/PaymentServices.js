@@ -40,3 +40,12 @@ export const getWithdrawalMoney = async () => {
     toast.error(error?.response?.data?.message);
   }
 };
+export const createPaymentIntent = async (payload) => {
+  try {
+    const res = await axiosInstance.post(`/v1/stripe/create-payment-intent`,payload);
+    return res.data;
+  } catch (error) {
+    console.log(error?.response?.data?.message);
+    toast.error(error?.response?.data?.message);
+  }
+};
