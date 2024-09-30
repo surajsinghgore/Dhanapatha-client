@@ -13,7 +13,7 @@ const StripePaymentPage = () => {
   const { clientSecret, amount } = location.state || {};
 
   const handlePaymentSuccess = async (paidAmount, paymentIntent) => {
-    console.log(paymentIntent);
+   
     try {
       let body = {
         amount: paidAmount,

@@ -12,6 +12,7 @@
   height: 95%;
   width: 50%;
   overflow: hidden; 
+  min-height: 95%;
 }
 
 .main .screen .content {

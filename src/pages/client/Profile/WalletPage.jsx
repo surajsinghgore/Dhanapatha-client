@@ -18,7 +18,7 @@ const WalletPage = () => {
   const [showModal, setShowModal] = useState(false);
   const [showWithdrawalModal, setShowWithdrawalModal] = useState(false);
   const [transaction, setTransaction] = useState([]);
-
+  
   const handleAddBalanceClick = () => {
     setShowModal(true);
   };

@@ -58,3 +58,34 @@ export const addMoneyApi = async (payload) => {
     toast.error(error?.response?.data?.message);
   }
 };
+
+
+
+
+export const BankAccountApi = async (payload) => {
+  try {
+    const res = await axiosInstance.post(`/v1/account/add-account-number`,payload);
+    return res.data;
+  } catch (error) {
+    console.log(error?.response?.data?.message);
+    toast.error(error?.response?.data?.message);
+  }
+};
+export const UpdateBankAccountApi = async (payload) => {
+  try {
+    const res = await axiosInstance.patch(`/v1/account/update-account-number`,payload);
+    return res.data;
+  } catch (error) {
+    console.log(error?.response?.data?.message);
+    toast.error(error?.response?.data?.message);
+  }
+};
+export const getBankAccountApi = async () => {
+  try {
+    const res = await axiosInstance.get(`/v1/account/get-bank`);
+    return res.data;
+  } catch (error) {
+    console.log(error?.response?.data?.message);
+    toast.error(error?.response?.data?.message);
+  }
+};
