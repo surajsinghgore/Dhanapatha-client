@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import  { useEffect, useState } from "react";
 import "../../../style/profile.css";
 import Modal from "../../../components/modal/AddWalletMoneyModal";
 import TransactionList from "../../../components/profile/TransactionList";
@@ -10,15 +10,13 @@ import { getWithdrawalMoney, withdrawalMoney, createPaymentIntent } from "../../
 import { useDispatch } from "react-redux";
 import { showLoader, updateProgress, hideLoader } from "../../../redux/Slices/LoaderSlice";
 import { toggleLoader } from "../../../redux/Slices/ApiHitState";
-import { loadStripe } from "@stripe/stripe-js"; // Import Stripe
-
-const stripePromise = loadStripe("pk_test_51Q0h36Ru6GkJxypiKWTVhEfFFn6QbWP7PpM0gHwpgL9JVcgUi6UrHW6cxdjZOVblRSC56Xy5GwlcPHHZ6T6ILFPS00SpAxYfBb"); // Replace with your Stripe public key
+import { useNavigate } from "react-router-dom";
 
 const WalletPage = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const [showModal, setShowModal] = useState(false);
   const [showWithdrawalModal, setShowWithdrawalModal] = useState(false);
-  const [balance, setBalance] = useState(0);
   const [transaction, setTransaction] = useState([]);
 
   const handleAddBalanceClick = () => {
@@ -39,55 +37,51 @@ const WalletPage = () => {
 
   // Add balance
   const handleAddBalance = async (amount) => {
-
     if (amount === "" || parseFloat(amount) <= 0) {
       toast.error("Please enter a valid amount");
-      return; // Prevent adding balance if amount is invalid
+      return;
     }
-
-    const stripe = await stripePromise;
-
-    // Create payment intent on the server
+  
     try {
       dispatch(showLoader());
-      let body={
-        "amount":amount
-      }
-      const { clientSecret } = await createPaymentIntent(body);
-
-      // Redirect to Stripe for payment
-      const { error } = await stripe.redirectToCheckout({
-        clientSecret,
-      });
-
-      if (error) {
-        toast.error("Payment failed: " + error.message);
-      } else {
-        setBalance(balance + parseFloat(amount));
-        toast.success("Balance added successfully!");
-        // setShowModal(false);
+      const { clientSecret, status } = await createPaymentIntent({ amount: parseFloat(amount) }); // Send amount in rupees
+  
+      if (status) {
+   
+        navigate("/user/stripe-pay", {
+          state: {
+            clientSecret: clientSecret,
+            amount: amount, 
+          },
+        });
       }
     } catch (error) {
       console.error("Payment error:", error);
-      
     } finally {
       dispatch(hideLoader());
-   
     }
   };
 
-  // Withdrawal amount
+
+  useEffect(() => {
+    (async () => {
+      dispatch(showLoader());
+      try {
+        const resData = await getWithdrawalMoney();
+        if (resData.success) {
+          setTransaction(resData);
+        }
+      } catch (error) {
+        console.log(error);
+      } finally {
+        dispatch(hideLoader());
+      }
+    })();
+  }, []);
+
   const handleWithdrawalBalance = async (amount) => {
- 
-    if (amount === "") {
-      toast.error("Please enter amount");
-      return;
-    }
-
-    let amountTotal = parseFloat(amount);
-
-    if (amountTotal <= 0) {
-      toast.error("Amount must be at least above 0");
+    if (amount === "" || parseFloat(amount) <= 0) {
+      toast.error("Please enter a valid amount");
       return;
     }
 
@@ -106,60 +100,26 @@ const WalletPage = () => {
     };
 
     simulateProgress();
-    let body = { amount: amountTotal };
+
+    let body = { amount: parseFloat(amount) };
 
     try {
-      let res = await withdrawalMoney(body);
+      const res = await withdrawalMoney(body);
       if (res.success) {
         dispatch(toggleLoader());
-
-        toast.success(`Withdrawal of amount ${res.withdrawal.amount} was successful.`);
+        toast.success(`Withdrawal of ₹${res.withdrawal.amount} was successful.`);
         setTimeout(() => {
           setShowWithdrawalModal(false);
         }, 1500);
       }
     } catch (error) {
-      console.log(error);
+      console.error("Withdrawal error:", error);
     } finally {
       setTimeout(() => {
         dispatch(hideLoader());
       }, 2000);
     }
   };
-
-  // Wallet transaction
-  useEffect(() => {
-    (async () => {
-      dispatch(showLoader());
-      const simulateProgress = () => {
-        let currentProgress = 0;
-        const progressInterval = setInterval(() => {
-          currentProgress += 4;
-          dispatch(updateProgress(currentProgress));
-
-          if (currentProgress >= 95) {
-            clearInterval(progressInterval);
-          }
-        }, 100);
-      };
-
-      simulateProgress();
-
-      try {
-        const resData = await getWithdrawalMoney();
-        if (resData.success) {
-          setTransaction(resData);
-        }
-      } catch (error) {
-        console.log(error);
-        dispatch(updateProgress(100));
-      } finally {
-        setTimeout(() => {
-          dispatch(hideLoader());
-        }, 2000);
-      }
-    })();
-  }, []);
 
   return (
     <div className="app-container">
@@ -183,12 +143,12 @@ const WalletPage = () => {
           <p>No withdrawal record found</p>
         ) : (
           <div className="transaction-list">
-            {transaction.transactionSummary.map((record) => (
+            {transaction.transactionSummary?.map((record) => (
               <div key={record._id}>
                 <h3 style={{ margin: "10px 0" }}>
                   Transactions on {record._id} ({record.count} transactions)
                 </h3>
-                {record.records.map((item) => (
+                {record.records?.map((item) => (
                   <div key={item._id}>
                     <TransactionList data={item} />
                   </div>

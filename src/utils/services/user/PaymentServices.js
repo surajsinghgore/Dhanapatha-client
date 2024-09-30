@@ -49,3 +49,12 @@ export const createPaymentIntent = async (payload) => {
     toast.error(error?.response?.data?.message);
   }
 };
+export const addMoneyApi = async (payload) => {
+  try {
+    const res = await axiosInstance.post(`/v1/stripe/add-money`,payload);
+    return res.data;
+  } catch (error) {
+    console.log(error?.response?.data?.message);
+    toast.error(error?.response?.data?.message);
+  }
+};

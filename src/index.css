@@ -110,3 +110,64 @@ li.p-autocomplete-item {
 .orange{
   color: rgb(6, 81, 230);
 }
+
+
+
+/* card pay form ui */
+/* Main container styling */
+.payment-form-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  margin-top: 20px;
+  max-width: 400px;
+  margin: 0 auto; /* Centers the form on the page */
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Title styling */
+.payment-form-title {
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: #333;
+  text-align: center;
+}
+
+/* Form styling */
+.payment-form {
+  width: 100%;
+}
+
+/* CardElement container styling */
+.card-element-wrapper {
+  margin-bottom: 20px;
+}
+
+/* Styling for the CardElement */
+.card-element {
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #fff;
+}
+
+/* Button styling */
+.pay-button {
+  width: 100%;
+  padding: 12px;
+  font-size: 16px;
+  color: white;
+  background-color: #007bff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.pay-button:hover {
+  background-color: #0056b3;
+}

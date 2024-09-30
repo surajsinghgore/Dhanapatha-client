@@ -15,6 +15,7 @@ import SettingPage from "../pages/client/Profile/SettingPage";
 import AddAccountForm from "../pages/client/Profile/AddAccountForm";
 import PaymentStatus from "../pages/client/Profile/PaymentStatus";
 import ShowAllHistoryPage from "../pages/client/AllTranscation/AllHistory";
+import StripePaymentPage from "../pages/client/Profile/PaymentForm";
 
 const router = createBrowserRouter([
   {
@@ -101,6 +102,14 @@ const router = createBrowserRouter([
         element: (
           <CommonLayout>
             <WalletPage />
+          </CommonLayout>
+        ),
+      },
+      {
+        path: "stripe-pay",
+        element: (
+          <CommonLayout>
+            <StripePaymentPage />
           </CommonLayout>
         ),
       },
