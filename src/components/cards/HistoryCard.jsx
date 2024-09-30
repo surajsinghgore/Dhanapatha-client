@@ -3,7 +3,6 @@ import { formatDate } from "../../utils/formatDate";
 import { getLocalStorageJSON } from "../../utils/LocalStorage";
 
 const HistoryCard = ({ data }) => {
-  console.log(data);
   let date = formatDate(data.createdAt);
   let currentUser = getLocalStorageJSON("user");
   return (

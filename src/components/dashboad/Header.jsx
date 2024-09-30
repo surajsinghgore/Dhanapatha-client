@@ -1,16 +1,16 @@
 import Images from "../../constants/Images";
 import { IoSettingsSharp } from "react-icons/io5";
 import { AutoComplete } from "primereact/autocomplete";
-import { useEffect, useState } from "react";
+import {  useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import { findUserByUsernameAndEmail } from "../../utils/services/user/UserServices";
-import { setLocalStorage } from "../../utils/LocalStorage";
+import { getLocalStorage, getLocalStorageJSON, setLocalStorage } from "../../utils/LocalStorage";
 const Header = () => {
   const navigate = useNavigate();
   const [selectedUser, setSelectedUser] = useState(null);
   const [filteredUsers, setFilteredUsers] = useState([]);
-
+  const user = useState(getLocalStorage("user") ? getLocalStorageJSON("user") : "");
   const searchUser = async (event) => {
     const query = event.query.toLowerCase();
     try {
@@ -37,8 +37,8 @@ const Header = () => {
               <img src={Images.user} alt="user" />
             </div>
             <div className="text">
-              <h6>Suraj singh</h6>
-              <h5>suraj@gmail.com</h5>
+              <h6>{user[0]?.username}</h6>
+              <h5>{user[0]?.email}</h5>
             </div>
           </div>
         </Link>
