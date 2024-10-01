@@ -58,7 +58,7 @@ const Login = () => {
 
       if (response?.success) {
 
-        dispatch(updateProgress(100));
+  
         setLocalStorage("token", response.token);
         setLocalStorage("user", JSON.stringify(response.user));
         toast.success(response.message);
@@ -66,12 +66,10 @@ const Login = () => {
         setTimeout(() => {
           navigate("/user/dashboard");
         }, 1500);
-      } else {
-        dispatch(updateProgress(100));
-      }
+      } 
     } catch (error) {
       console.log(error);
-      dispatch(updateProgress(100));
+
     } finally {
       setTimeout(() => {
         dispatch(hideLoader());

@@ -61,7 +61,7 @@ const Register = () => {
       const response = await registrationUserApi(formData);
 
       if (response?.success) {
-        dispatch(updateProgress(100));
+      
         setLocalStorage("token", response.token);
         toast.success(response.message);
         setLocalStorage("user", JSON.stringify(response.user));
@@ -70,14 +70,15 @@ const Register = () => {
           navigate("/user/dashboard");
         }, 1500);
       } else {
-        dispatch(updateProgress(100));
+   
         toast.error(response?.message || "An unexpected error occurred.");
       }
     } catch (error) {
       console.error(error);
-      toast.error("An unexpected error occurred.");
-      dispatch(updateProgress(100));
+
+   
     } finally {
+  
       setTimeout(() => {
         dispatch(hideLoader());
       }, 2000);

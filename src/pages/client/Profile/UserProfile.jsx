@@ -27,7 +27,7 @@ const UserProfile = () => {
         };
 
         simulateProgress();
-        let res = await senderData();
+        let res = await receiverData();
         if (res.success) {
           setTransaction(res.transactions);
         }
@@ -54,7 +54,7 @@ const UserProfile = () => {
         };
 
         simulateProgress();
-        let res = await receiverData();
+        let res = await senderData();
         if (res.success) {
           setTransaction(res.transactions);
         }

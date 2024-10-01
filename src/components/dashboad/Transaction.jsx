@@ -39,9 +39,10 @@ const Transaction = () => {
     })();
   }, []);
   return (
-    <div className="transaction">
-      {history.length != 0 && (
-        <>
+    <>
+    {history.length != 0 && (
+      <>
+        <div className="transaction">
           {" "}
           <h2>Recent Activity</h2>
           <div className="transactionCardContainer">
@@ -56,9 +57,10 @@ const Transaction = () => {
           <div className="bottom">
             <Link to="/user/all-history">See more</Link>
           </div>
+    </div>
         </>
       )}
-    </div>
+      </>
   );
 };
 
