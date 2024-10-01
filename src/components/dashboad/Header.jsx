@@ -43,7 +43,7 @@ const Header = () => {
           </div>
         </Link>
         <div className="setting">
-          <Link to="/user/profile">
+          <Link to="/user/setting">
             {" "}
             <IoSettingsSharp />
           </Link>
