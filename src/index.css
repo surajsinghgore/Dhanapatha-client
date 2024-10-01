@@ -102,13 +102,21 @@ li.p-autocomplete-item {
 }
 
 .green{
+  font-weight: 500;
   color: rgb(8, 176, 95);
 }
 .red{
   color: red;
 }
 .orange{
+  font-weight: 500;
   color: rgb(6, 81, 230);
+}
+.moneyAdd{
+  font-weight: 500;
+
+  color: rgb(245, 116, 30);
+
 }
 
 

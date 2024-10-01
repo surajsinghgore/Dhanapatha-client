@@ -13,15 +13,23 @@ const TransactionCard = ({ data }) => {
       </div>
       <div className="texts">
         <h4>
-          {data.status == "refunded" ? "From " : <> {currentUser.username == data?.receiver?.username ? "From " : "To "}</>}
-          {currentUser.username == data?.receiver?.username ? <>{data?.senderUsername}</> : <>{data?.receiver?.username}</>}{" "}
+        {data.type == "Add Money" ? "Me " : <>{data.status == "refunded" ? "From " : <> {currentUser.username == data?.receiver?.username ? "From " : "To "}</>}
+</>}
+          
+          {data.type == "Add Money" ? "" : <> {currentUser.username == data?.receiver?.username ? <>{data?.senderUsername}</> : <>{data?.receiver?.username}</>} </>}
         </h4>
         <h6>
-          {date} {data.status == "refunded" ? "Refunded" : "Paid"}
+          {date} {data.status == "refunded" ? "Refunded" : data.type}
         </h6>
       </div>
-      {data.status == "refunded" ? <span className="orange">+ ₹{data.amount}</span> :<div className="amount">{currentUser.username == data?.receiver?.username ? <span className="green">+ ₹{data.amount}</span> : <span className="red">- ₹{data.amount}</span>} </div>
-      }
+
+      {data.type == "Add Money" ?<span className="moneyAdd">+ ₹{data.amount}</span>: <>  {data.status == "refunded" ? (
+        <span className="orange">+ ₹{data.amount}</span>
+      ) : (
+        <div className="amount">{currentUser.username == data?.receiver?.username ? <span className="green">+ ₹{data.amount}</span> : <span className="red">- ₹{data.amount}</span>} </div>
+      )}</>}
+
+     
     </div>
   );
 };

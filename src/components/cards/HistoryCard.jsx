@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import Images from "../../constants/Images";
 import { formatDate } from "../../utils/formatDate";
 import { getLocalStorageJSON } from "../../utils/LocalStorage";
@@ -7,9 +8,12 @@ const HistoryCard = ({ data }) => {
   let currentUser = getLocalStorageJSON("user");
   return (
     <div className="transactionCard">
+      <Link to={`/user/payment/${data?.receiver?.email }`}>
+
       <div className="img">
         <img src={Images.user} alt="user" />
       </div>
+      </Link>
       <div className="texts">
         <h4>
           {data.type == "addMoney" ? (

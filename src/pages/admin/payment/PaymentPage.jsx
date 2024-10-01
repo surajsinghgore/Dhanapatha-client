@@ -88,7 +88,7 @@ const PaymentPage = () => {
         <Link to="/user/pay-payment">
           <div className="pay">Pay</div>
         </Link>
-        <div className="pay">Request</div>
+        {/* <div className="pay">Request</div>   */}
       </div>
     </div>
   );

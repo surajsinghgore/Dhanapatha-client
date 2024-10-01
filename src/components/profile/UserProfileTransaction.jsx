@@ -16,7 +16,7 @@ const UserTransactionList = ({ data }) => {
                     <span>{txn?.user?.email}</span>
                   </div>
                   <p className={`transaction-amount ${txn?.status}`}>
-                    ₹ {txn?.status === "receiver" ? " + " : " - "}
+                    ₹ {txn?.status == "receiver" ? " - " : " + "}
                     {txn?.amount}
                   </p>
                 </div>

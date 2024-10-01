@@ -104,11 +104,11 @@
   border-bottom: 1px solid #eee;
 }
 
-.transaction-item.withdrawal .transaction-amount ,.sender{
+.transaction-item.withdrawal .transaction-amount , .receiver {
   color: #f34343;
 }
 
-.transaction-item.addMoney .transaction-amount,.receiver {
+.transaction-item.addMoney .transaction-amount, .sender {
   color: #42c742;
 }
 
