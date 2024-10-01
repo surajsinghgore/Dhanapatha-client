@@ -1,6 +1,7 @@
 import "../../style/profile.css";
 
 const TransactionList = ({ data }) => {
+
   return (
     <div className="transaction-items">
       <div className={`transaction-item ${data?.type}`}>

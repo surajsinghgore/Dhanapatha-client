@@ -89,3 +89,24 @@ export const getBankAccountApi = async () => {
     toast.error(error?.response?.data?.message);
   }
 };
+
+
+export const senderData=async()=>{
+  try {
+    const res = await axiosInstance.get(`/v1/account/fetch-receiver-data`);
+    return res.data;
+  } catch (error) {
+    console.log(error?.response?.data?.message);
+    toast.error(error?.response?.data?.message);
+  }
+}
+
+export const receiverData=async()=>{
+  try {
+    const res = await axiosInstance.get(`/v1/account/fetch-sender-data`);
+    return res.data;
+  } catch (error) {
+    console.log(error?.response?.data?.message);
+    toast.error(error?.response?.data?.message);
+  }
+}

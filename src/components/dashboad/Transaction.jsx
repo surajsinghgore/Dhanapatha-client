@@ -1,10 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import TransactionCard from "../cards/TransactionCard";
-
 import { useDispatch } from "react-redux";
 import { showLoader, updateProgress, hideLoader } from "../../redux/Slices/LoaderSlice";
-import { getTransaction } from "../../utils/services/user/UserServices";
 import { historyApi } from "../../utils/services/user/RefundServices";
 import HistoryCard from "../cards/HistoryCard";
 const Transaction = () => {
