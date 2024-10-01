@@ -5,7 +5,9 @@ import { BankAccountApi, getBankAccountApi, UpdateBankAccountApi } from "../../.
 import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import { showLoader, updateProgress, hideLoader } from "../../../redux/Slices/LoaderSlice";
+import { useNavigate } from "react-router-dom";
 const AddAccountForm = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const [accountDetails, setAccountDetails] = useState({
     accountHolderName: "",
@@ -37,11 +39,11 @@ const AddAccountForm = () => {
       simulateProgress();
 
       let res = await getBankAccountApi();
-      
+
       if (res.status && res.message !== "No bank account details found.") {
         setBankData([]);
       } else if (res.bankAccountDetails) {
-        setBankData([res.bankAccountDetails]); 
+        setBankData([res.bankAccountDetails]);
         setAccountDetails({
           accountHolderName: res.bankAccountDetails.accountHolderName || "",
           ifscCode: res.bankAccountDetails.ifscCode || "",
@@ -50,13 +52,12 @@ const AddAccountForm = () => {
           bankName: res.bankAccountDetails.bankName || "",
         });
       } else {
-        setBankData([]); 
+        setBankData([]);
       }
     } catch (error) {
       console.log(error);
       setBankData([]);
-    }
-    finally{
+    } finally {
       setTimeout(() => {
         dispatch(hideLoader());
       }, 2000);
@@ -104,72 +105,91 @@ const AddAccountForm = () => {
     if (!isValid) return;
 
     if (bankdata.length === 0) {
-      dispatch(showLoader());
-      const simulateProgress = () => {
-        let currentProgress = 0;
-        const progressInterval = setInterval(() => {
-          currentProgress += 4;
-          dispatch(updateProgress(currentProgress));
+      try {
+        dispatch(showLoader());
+        const simulateProgress = () => {
+          let currentProgress = 0;
+          const progressInterval = setInterval(() => {
+            currentProgress += 4;
+            dispatch(updateProgress(currentProgress));
 
-          if (currentProgress >= 95) {
-            clearInterval(progressInterval);
-          }
-        }, 100);
-      };
+            if (currentProgress >= 95) {
+              clearInterval(progressInterval);
+            }
+          }, 100);
+        };
 
-      simulateProgress();
-      let body = {
-        accountHolderName: accountDetails.accountHolderName,
-        accountNumber: accountDetails.accountNumber,
-        ifscCode: accountDetails.ifscCode,
-        bankName: accountDetails.bankName,
-        accountType: accountDetails.accountType,
-      };
-      let res = await BankAccountApi(body);
-      if (res.status) {
-        getBankAccount()
-        toast.success("Bank Account added successfully");
+        simulateProgress();
+        let body = {
+          accountHolderName: accountDetails.accountHolderName,
+          accountNumber: accountDetails.accountNumber,
+          ifscCode: accountDetails.ifscCode,
+          bankName: accountDetails.bankName,
+          accountType: accountDetails.accountType,
+        };
+        let res = await BankAccountApi(body);
+        if (res.status) {
+          getBankAccount();
+          toast.success("Bank Account added successfully");
+
+          setTimeout(() => {
+            dispatch(hideLoader());
+            navigate("/user/wallet");
+          }, 2000);
+        }
+      } catch (error) {
+        console.log(error);
+      } finally {
         setTimeout(() => {
           dispatch(hideLoader());
         }, 2000);
       }
     } else {
+      try {
+        dispatch(showLoader());
+        const simulateProgress = () => {
+          let currentProgress = 0;
+          const progressInterval = setInterval(() => {
+            currentProgress += 4;
+            dispatch(updateProgress(currentProgress));
 
-      dispatch(showLoader());
-      const simulateProgress = () => {
-        let currentProgress = 0;
-        const progressInterval = setInterval(() => {
-          currentProgress += 4;
-          dispatch(updateProgress(currentProgress));
+            if (currentProgress >= 95) {
+              clearInterval(progressInterval);
+            }
+          }, 100);
+        };
 
-          if (currentProgress >= 95) {
-            clearInterval(progressInterval);
-          }
-        }, 100);
-      };
+        simulateProgress();
+        let body = {
+          accountHolderName: accountDetails.accountHolderName,
+          accountNumber: accountDetails.accountNumber,
+          ifscCode: accountDetails.ifscCode,
+          bankName: accountDetails.bankName,
+          accountType: accountDetails.accountType,
+        };
+        let res = await UpdateBankAccountApi(body);
+        if (res.status) {
+          getBankAccount();
+          toast.success("Bank Account updated successfully");
 
-      simulateProgress();
-      let body = {
-        accountHolderName: accountDetails.accountHolderName,
-        accountNumber: accountDetails.accountNumber,
-        ifscCode: accountDetails.ifscCode,
-        bankName: accountDetails.bankName,
-        accountType: accountDetails.accountType,
-      };
-      let res = await UpdateBankAccountApi(body);
-      if (res.status) {
-        getBankAccount()
-        toast.success("Bank Account updated successfully");
-      }
-    
+          setTimeout(() => {
+            dispatch(hideLoader());
+            navigate("/user/setting");
+          }, 2000);
+        }
+
         setTimeout(() => {
           dispatch(hideLoader());
         }, 2000);
-      
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setTimeout(() => {
+          dispatch(hideLoader());
+        }, 2000);
+      }
     }
   };
-
- 
 
   useEffect(() => {
     getBankAccount();
@@ -210,8 +230,7 @@ const AddAccountForm = () => {
             </div>
 
             <button type="submit" className="checkout-btn">
-            
-             {(bankdata.length==0)?"Add":"Update"}  Account
+              {bankdata.length == 0 ? "Add" : "Update"} Account
             </button>
           </form>
         </div>
